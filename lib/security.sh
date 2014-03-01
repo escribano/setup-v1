@@ -18,7 +18,10 @@ function install.key {
   #cd /home/ademir
   mkdir -p /home/ademir/.ssh
   cat /home/admin/id_rsa.pub >> /home/ademir/.ssh/authorized_keys
+  chmod 700 /home/ademir/.ssh
+  chmod 600 /home/ademir/.ssh/authorized_keys
   chown ademir.ademir /home/ademir/.ssh
   chown ademir.ademir /home/ademir/.ssh/authorized_keys
-  ls -alh /home/ademir/.ssh/authorized_keys
+  #rm /home/admin/id_rsa.pub
+  #ls -alh /home/ademir/.ssh/authorized_keys
 }
