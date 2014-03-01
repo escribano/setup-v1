@@ -33,7 +33,7 @@ local   all             all                                     peer
 local   all             all                                     md5
   " > /etc/postgresql/9.3/main/include_auth_hba.conf
   
-  sed -n 'H;${x;s/# DO NOT DISABLE!.*\n/include "include_auth_hba.conf"\n\n\n&/;p;}' /etc/postgresql/9.3/main/pg_hba.conf
+  sed -n 'H;${x;s/# DO NOT DISABLE!.*\n/include "include_auth_hba.conf"\n\n\n&/;p;}' /etc/postgresql/9.3/main/pg_hba.conf > /etc/postgresql/9.3/main/pg_hba.conf
   
   #include 'filename'
   #include_dir 'directory'
