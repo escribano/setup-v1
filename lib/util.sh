@@ -8,3 +8,11 @@ function update.me {
   git pull origin master
   cd $SAVED_PWD
 }
+
+function source.me {
+  SAVED_PWD=`pwd`
+  cd $SETUP_ROOT_PATH
+  source ./install
+  #git pull origin master
+  cd $SAVED_PWD
+}
