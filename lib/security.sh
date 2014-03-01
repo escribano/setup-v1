@@ -18,4 +18,5 @@ function install.key {
   cd /home/ademir
   mkdir .ssh
   cat id_rsa.pub >> ~/.ssh/authorized_keys
+  exit
 }
