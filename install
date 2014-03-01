@@ -1,0 +1,84 @@
+#!/bin/bash
+#set -e # Exit if any command returns non-zero.
+UNAME=`uname`
+#echo "$UNAME"
+
+if [ "$UNAME" == "Darwin" ]; then
+	#echo "this is mac"
+	#`which greadlink`
+	if [ ! `which greadlink` ]; then
+		#echo 'That was a good job!'
+		SETUP_ROOT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+	else
+		READLINK="greadlink"
+		SETUP_ROOT_PATH=$(dirname $($READLINK -f $BASH_SOURCE))
+	fi
+	#alias readlink=greadlink
+	#READLINK="greadlink"
+	#if [ "$NETWORKING" = "no" ]
+	#then
+	#        exit 0
+	#fi
+elif [ "$UNAME" == "Linux" ]; then
+	READLINK="readlink"
+	SETUP_ROOT_PATH=$(dirname $($READLINK -f $BASH_SOURCE))
+else
+	echo "not yet"
+	exit 0
+fi
+
+#tas || true
+#echo "$0"
+#echo "$(dirname ($0))"
+#echo "($0)"
+#ROOT_PATH=$(dirname $($READLINK -f $0))
+#ROOT_PATH=$(dirname $($READLINK -f $BASH_SOURCE))
+#DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+#ROOT_PATH3=$(dirname ${BASH_SOURCE%/*})
+SETUP_LIB_PATH="$SETUP_ROOT_PATH/lib"
+#LIB_PATH="$LIB_PATH/stack"
+#scriptPath=${0%/*}
+#echo "$BASH_SOURCE"
+#echo "${BASH_SOURCE%/*}"
+#echo "$ROOT_PATH"
+#echo "$ROOT_PATH"
+#echo "$ROOT_PATH3"
+
+#echo "setup root in $ROOT_PATH"
+
+source "$SETUP_LIB_PATH/clean.sh"
+source "$SETUP_LIB_PATH/colors.sh"
+source "$SETUP_LIB_PATH/database.sh"
+source "$SETUP_LIB_PATH/ebs.sh"
+source "$SETUP_LIB_PATH/ec2.sh"
+source "$SETUP_LIB_PATH/funk.sh"
+source "$SETUP_LIB_PATH/libs.sh"
+source "$SETUP_LIB_PATH/node.sh"
+source "$SETUP_LIB_PATH/postgres.sh"
+source "$SETUP_LIB_PATH/security.sh"
+source "$SETUP_LIB_PATH/util.sh"
+
+#source "$LIB_PATH/.sh"
+#echo "ami functions installed from $LIB_PATH/ec2/ami.sh"
+
+#echo ${#BASH_ARGV[@]}
+#echo "${BASH_ARGV[0]%bang.sh}"
+
+#function srcami {
+#	ec2-describe-images  --region sa-east-1 ami-9717b78a
+#}
+
+#exit
+
+#if [ ! -n "$1" ]; then
+#	echo "Usage: ./install <recipe>"
+#	exit 1;
+#fi
+
+#RECIPE="$ROOT_PATH/recipes/$1"
+#RECIPE="$ROOT_PATH/lib/recipes/$1"
+#if [ -e $RECIPE ] ; then
+#	source "$RECIPE"
+#fi
+
+#install_`echo $1`

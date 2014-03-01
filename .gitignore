@@ -11,3 +11,11 @@ Makefile.in
 /depcomp
 /install-sh
 /missing
+
+*.swp
+
+.DS_Store
+node_modules
+*.sock
+testing
+/var

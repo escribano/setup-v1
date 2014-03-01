@@ -1,0 +1,67 @@
+#fontName = "Menlo"
+#fontSize         = 13
+
+#fontName = "DejaVu Sans Mono"
+#fontSize = 14
+
+#fontName         = "Source Code Pro"
+#fontSize         = 13
+
+exclude = "{$exclude,.DS_Store}"
+
+[ attr.untitled ]
+fileType         = 'source.md'
+
+[ "*.{html,htm}" ]
+softWrap   = false
+softTabs   = true
+tabSize    = 4
+
+[ "*.{txt,md,mdown,markdown}" ]
+softWrap   = true
+softTabs   = false
+tabSize    = 2
+
+excludeFiles   = "*.{so,pyc,o,scssc}"
+excludeDirectories = "build,dist,tmp,log"
+
+#You have to create a .tm_properties file in your project root and add this line:
+
+projectDirectory = "$CWD"
+#That way TM2 knows to perform all file search related queries from the path, 
+#so when using cmd+T you'll not only see matches from the current root in the finder/project drawer.
+
+#If you want to navigate the project using the finder/project drawer use the same keys as in Finder.
+
+# show the path to the current tab's file in the window title 
+# (replace the 2 instances of 'username' in the string below 
+# with your mac username).
+windowTitle    = "$TM_DISPLAYNAME${TM_DIRECTORY/\A(?:\/Users\/username\w+\/?(.*)|(.+))\z/${2:? – ${2/\A\/Users\/username/~/}:${1/\A(?=.)/ – /}}/}"
+
+
+#fontName       = "Monaco" 
+#fontSize       = 13
+#tabSize        = 2
+#softTabs       = true
+#wrapColumn     = 80 | "Use Window Frame" # choose one
+#sofWrap        = false
+showInvisibles = true
+
+# special per-filetype rules can be specified like so:
+#[ *.{txt,md,mdown,markdown} ]
+#spellChecking  = true
+#tabSize        = 4
+#spellingLanguage = 'en'
+
+[ "{.npmignore,*.log,app.mako-dot-conf,00-branch.mako-dot-conf,ga-ol3.exports}" ]
+fileType         = "text.plain"
+
+[ "{bin/*}" ]
+fileType         = "shell.script"
+
+# Hide log, vendor and tmp directories from search popups.
+#
+moreExtraExcludes = "dist,docs,node_modules,prd,test"
+excludeInFileChooser  = "{$excludeInFileChooser,$moreExtraExcludes}"
+excludeInFolderSearch = "{$excludeInFolderSearch,$moreExtraExcludes}"
+
