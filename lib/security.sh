@@ -17,7 +17,7 @@ function install.key {
   #su ademir
   #cd /home/ademir
   mkdir -p /home/ademir/.ssh
-  cat /home/admin/id_rsa.pub >> ~/.ssh/authorized_keys
+  cat /home/admin/id_rsa.pub >> /home/ademir/.ssh/authorized_keys
   chown ademir.ademir /home/ademir/.ssh
   chown ademir.ademir /home/ademir/.ssh/id_rsa.pub
 }
