@@ -1,9 +1,8 @@
 function copy.key {
-  #mac
-  scp -i ~/.ec2/rsa-ec2-sa.pem ~/.ssh/id_rsa.pub admin@basic.mapa.io:
-
-  ssh -i ~/.ec2/rsa-ec2-sa.pem admin@basic.mapa.io
-  sudo -i
+  SERVER_NAME=$1
+  scp -i ~/.ec2/rsa-ec2-sa.pem ~/.ssh/id_rsa.pub admin@$SERVER_NAME.mapa.io:
+  #ssh -i ~/.ec2/rsa-ec2-sa.pem admin@basic.mapa.io
+  #sudo -i
 }
 
 function create.me {

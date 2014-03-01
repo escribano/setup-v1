@@ -9,31 +9,47 @@ function _attach.volume () {
   DEVICE_LETTER=$1
   INSTANCE_ID=$2
   VOLUME_ID=$3
-  ec2-describe-volumes --region sa-east-1 $VOLUME_ID
+  #ec2-describe-volumes --region sa-east-1 $VOLUME_ID
   ec2-attach-volume --region sa-east-1 -d /dev/xvd$DEVICE_LETTER -i $INSTANCE_ID $VOLUME_ID
 }
 
 function create.ebs.data {
-  INSTANCE_ID=$1
+  SERVER_NAME=$1
+  INSTANCE_ID=`ec2-describe-instances --region sa-east-1 --filter tag:Name=$SERVER_NAME | awk '$1 == "INSTANCE" {print $2}'`
+  #echo $INSTANCE_ID
   ec2-create-volume --region sa-east-1 -z sa-east-1a -s 20 > $SETUP_ROOT_PATH/var/create.ebs.data.txt
-  VOLUME_ID=`cat $SETUP_ROOT_PATH/var/create.ebs.db.txt | awk '$1 == "VOLUME" {print $2}'`
+  VOLUME_ID=`cat $SETUP_ROOT_PATH/var/create.ebs.data.txt | awk '$1 == "VOLUME" {print $2}'`
+  sleep 15
   _attach.volume f $INSTANCE_ID $VOLUME_ID
+  sleep 15
+  ec2-create-tags --region sa-east-1 $VOLUME_ID --tag "Name=mapa.data"
+  ec2-describe-volumes --region sa-east-1 $VOLUME_ID
 }
 
 function create.ebs.db {
-  # mac
-  INSTANCE_ID=$1
+  SERVER_NAME=$1
+  INSTANCE_ID=`ec2-describe-instances --region sa-east-1 --filter tag:Name=$SERVER_NAME | awk '$1 == "INSTANCE" {print $2}'`
+  #echo $INSTANCE_ID
   ec2-create-volume --region sa-east-1 -z sa-east-1a -s 10 > $SETUP_ROOT_PATH/var/create.ebs.db.txt
   VOLUME_ID=`cat $SETUP_ROOT_PATH/var/create.ebs.db.txt | awk '$1 == "VOLUME" {print $2}'`
+  sleep 15
   _attach.volume p $INSTANCE_ID $VOLUME_ID
+  sleep 15
+  ec2-create-tags --region sa-east-1 $VOLUME_ID --tag "Name=mapa.db"
+  ec2-describe-volumes --region sa-east-1 $VOLUME_ID
 }
 
 function create.ebs.mapa {
-  # mac
-  INSTANCE_ID=$1
+  SERVER_NAME=$1
+  INSTANCE_ID=`ec2-describe-instances --region sa-east-1 --filter tag:Name=$SERVER_NAME | awk '$1 == "INSTANCE" {print $2}'`
+  #echo $INSTANCE_ID
   ec2-create-volume --region sa-east-1 -z sa-east-1a -s 10 > $SETUP_ROOT_PATH/var/create.ebs.mapa.txt
-  VOLUME_ID=`cat $SETUP_ROOT_PATH/var/create.ebs.db.txt | awk '$1 == "VOLUME" {print $2}'`
+  VOLUME_ID=`cat $SETUP_ROOT_PATH/var/create.ebs.mapa.txt | awk '$1 == "VOLUME" {print $2}'`
+  sleep 15
   _attach.volume m $INSTANCE_ID $VOLUME_ID
+  sleep 15
+  ec2-create-tags --region sa-east-1 $VOLUME_ID --tag "Name=mapa.server"
+  ec2-describe-volumes --region sa-east-1 $VOLUME_ID
 }
 
 function fdisk.debian {
