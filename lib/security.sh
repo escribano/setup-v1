@@ -12,12 +12,12 @@ function create.me {
 }
 
 function install.key {
-  cp /home/admin/id_rsa.pub /home/ademir/
-  chown ademir.ademir /home/ademir/id_rsa.pub
-  su ademir
-  cd /home/ademir
-  mkdir .ssh
-  cat id_rsa.pub >> ~/.ssh/authorized_keys
-  exit
-  cd -
+  #cp /home/admin/id_rsa.pub /home/ademir/
+  #chown ademir.ademir /home/ademir/id_rsa.pub
+  #su ademir
+  #cd /home/ademir
+  mkdir -p /home/ademir/.ssh
+  cat /home/admin/id_rsa.pub >> ~/.ssh/authorized_keys
+  chown ademir.ademir /home/ademir/.ssh
+  chown ademir.ademir /home/ademir/.ssh/id_rsa.pub
 }
