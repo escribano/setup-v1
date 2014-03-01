@@ -25,3 +25,9 @@ function up.me {
   git push origin master
   cd $SAVED_PWD
 }
+
+function add.me.to.bashrc () {
+  echo "" >> .bashrc
+  echo "source $SETUP_ROOT_PATH/install" >> ~/.bashrc
+  echo "" >> .bashrc
+}
