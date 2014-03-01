@@ -31,7 +31,7 @@ function data.upload () {
 
 function config.data.dir () {
   mkdir -p /mnt/ebs/data/upload
-  chown ademir.ademir /mnt/ebs/upload
+  chown ademir.ademir /mnt/ebs/data/upload
 }
 
 function explode.upload () {
