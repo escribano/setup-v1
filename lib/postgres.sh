@@ -33,9 +33,9 @@ local   all             all                                     ident \
 local   all             all                                     peer \
 local   all             all                                     md5 \
      \n\n\n&/;p;}' < /etc/postgresql/9.3/main/pg_hba.conf > /etc/postgresql/9.3/main/new_pg_hba.conf
-
+  cp /etc/postgresql/9.3/main/new_pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf
+  
   cp /etc/postgresql/9.3/main/pg_ident.conf /etc/postgresql/9.3/main/pg_ident.conf.backup
-
   echo "" >> /etc/postgresql/9.3/main/pg_ident.conf
   echo "admin           root                    postgres" >> /etc/postgresql/9.3/main/pg_ident.conf
   echo "admin           ademir                  postgres" >> /etc/postgresql/9.3/main/pg_ident.conf
