@@ -33,6 +33,8 @@ function config.data.dir () {
 function explode.upload () {
   DELAY_INSTALL=true
   # tar -xf archive.tar -C /target/directory
+  rm -rf /mnt/ebs/data/mapa/import/sql
+  mkdir -p /mnt/ebs/data/mapa/import/sql
   tar xzvf /mnt/ebs/data/upload/sql.import.tar.gz -C /mnt/ebs/data/mapa/import/sql
   if [ $DELAY_INSTALL != true ]; then
     tar xzvf /mnt/ebs/data/upload/raster.data.tar.gz  -C /mnt/ebs/data/mapa/raster

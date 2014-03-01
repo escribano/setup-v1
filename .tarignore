@@ -6,3 +6,4 @@ db_dumps
 logs
 scss
 source
+._*
