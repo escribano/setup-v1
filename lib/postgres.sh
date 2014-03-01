@@ -23,6 +23,48 @@ function move.cluster {
 }
 
 function config.cluster {
+  cp /etc/postgresql/9.3/main/pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf.backup
+  
+  sed -n 'H;${x;s/# DO NOT DISABLE!.*\n/  \
+# TYPE  DATABASE        USER            ADDRESS                 METHOD \
+local   all             all                                     trust  \
+local   all             all                                     ident map=admin \
+local   all             all                                     ident \
+local   all             all                                     peer \
+local   all             all                                     md5 \
+     \n\n\n&/;p;}' < /etc/postgresql/9.3/main/pg_hba.conf > /etc/postgresql/9.3/main/new_pg_hba.conf
+
+  cp /etc/postgresql/9.3/main/pg_ident.conf /etc/postgresql/9.3/main/pg_ident.conf.backup
+
+  echo "" >> /etc/postgresql/9.3/main/pg_ident.conf
+  echo "admin           root                    postgres" >> /etc/postgresql/9.3/main/pg_ident.conf
+  echo "admin           ademir                  postgres" >> /etc/postgresql/9.3/main/pg_ident.conf
+  #echo "#admin           www-data                postgres" >> /etc/postgresql/9.3/main/pg_ident.conf
+  echo "" >> /etc/postgresql/9.3/main/pg_ident.conf
+}
+
+function start.postgres {
+  /etc/init.d/postgresql start
+}
+
+
+function more.postgres {
+  psql -U postgres
+  sudo -u postgres psql -p 5433
+  /etc/init.d/postgresql   stop 9.3
+  nano /etc/postgresql/9.3/main/pg_hba.conf
+  nano /etc/postgresql/9.3/main/pg_ident.conf
+  /etc/init.d/postgresql start 9.3
+  /etc/init.d/postgresql start
+}
+
+function find.postgres () {
+  ps -ef | grep postgres
+  psql -d postgres -c "SHOW hba_file;"
+  cat /usr/local/var/postgres/pg_hba.conf
+}
+
+function config.cluster.mess {
   #cp /etc/postgresql/9.3/main/pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf.backup
   AUTH_HBA=$'
   # TYPE  DATABASE        USER            ADDRESS                 METHOD 
@@ -43,11 +85,28 @@ function config.cluster {
   #AUTH_HBA=$AUTH_HBA1$AUTH_HBA2$AUTH_HBA1$AUTH_HBA3
   #echo "$AUTH_HBA"
   #foo=$(printf "%s %s" "$foo" "$(date)")
-  
-  sed -n 'H;${x;s/# DO NOT DISABLE!.*\n/"$AUTH_HBA"\n\n\n&/;p;}' < /etc/postgresql/9.3/main/pg_hba.conf > /etc/postgresql/9.3/main/new_pg_hba.conf
+  AUTH_HBA=balble
+  EXP='H;${x;s/# DO NOT DISABLE!.*\n/'"$AUTH_HBA"'\n\n\n&/;p;}'
+  sed -n "$EXP" < /etc/postgresql/9.3/main/pg_hba.conf > /etc/postgresql/9.3/main/new_pg_hba.conf
+  sed -n "H;${x;s/# DO NOT DISABLE!.*\n/$AUTH_HBA\n\n\n&/;p;}" < /etc/postgresql/9.3/main/pg_hba.conf > /etc/postgresql/9.3/main/new_pg_hba.conf
   #cp /etc/postgresql/9.3/main/new_pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf
+  sed '/^#$/{N; /# DO NOT DISABLE!/ i \
+  <Location /cgis> \
+     Options +ExecCGI\
+     Order allow,deny\
+     Allow from all\
+  </Location>\
+
+  }' < /etc/postgresql/9.3/main/pg_hba.conf
   
-  
+  sed -n 'H;${x;s/# DO NOT DISABLE!.*\n/  \
+# TYPE  DATABASE        USER            ADDRESS                 METHOD \
+local   all             all                                     trust  \
+local   all             all                                     ident map=admin \
+local   all             all                                     ident \
+local   all             all                                     peer \
+local   all             all                                     md5 \
+     \n\n\n&/;p;}' < /etc/postgresql/9.3/main/pg_hba.conf > /etc/postgresql/9.3/main/new_pg_hba.conf
   #include 'filename'
   #include_dir 'directory'
   #nano /etc/postgresql/9.3/main/pg_hba.conf
@@ -75,25 +134,4 @@ function config.cluster {
   echo "" >> /etc/postgresql/9.3/main/pg_ident.conf
   echo 'include "include_map_ident.conf"' >> /etc/postgresql/9.3/main/pg_ident.conf
   echo "" >> /etc/postgresql/9.3/main/pg_ident.conf
-}
-
-function start.postgres {
-  /etc/init.d/postgresql start
-}
-
-
-function more.postgres {
-  psql -U postgres
-  sudo -u postgres psql -p 5433
-  /etc/init.d/postgresql   stop 9.3
-  nano /etc/postgresql/9.3/main/pg_hba.conf
-  nano /etc/postgresql/9.3/main/pg_ident.conf
-  /etc/init.d/postgresql start 9.3
-  /etc/init.d/postgresql start
-}
-
-function find.postgres () {
-  ps -ef | grep postgres
-  psql -d postgres -c "SHOW hba_file;"
-  cat /usr/local/var/postgres/pg_hba.conf
 }
