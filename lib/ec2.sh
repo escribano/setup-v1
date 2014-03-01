@@ -143,6 +143,19 @@ function tag.mapa.ami () {
   ec2-create-tags --region sa-east-1 $MAPA_AMI --tag "Name=mapa.ami.v1"
 }
 
+function install.mapa.instance () {
+  create.me
+  install.key
+  install.node.25
+  mount.ebs.data
+  mount.ebs.db
+  mount.ebs.mapa
+  install.postgres
+  stop.postgres
+  move.cluster
+  start.postgres
+}
+
 function more.functions () {
   ec2-allocate-address --region sa-east-1
   ec2-assign-private-ip-addresses --region sa-east-1

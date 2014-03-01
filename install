@@ -48,6 +48,7 @@ SETUP_LIB_PATH="$SETUP_ROOT_PATH/lib"
 
 source "$SETUP_LIB_PATH/clean.sh"
 source "$SETUP_LIB_PATH/colors.sh"
+source "$SETUP_LIB_PATH/data.sh"
 source "$SETUP_LIB_PATH/database.sh"
 source "$SETUP_LIB_PATH/ebs.sh"
 source "$SETUP_LIB_PATH/ec2.sh"
