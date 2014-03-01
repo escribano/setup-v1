@@ -19,4 +19,5 @@ function install.key {
   mkdir .ssh
   cat id_rsa.pub >> ~/.ssh/authorized_keys
   exit
+  cd -
 }
