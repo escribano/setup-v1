@@ -3,7 +3,9 @@ function _send.this () {
   DIST_SRV=basic.ami
   ARCHIVE_NAME=$1
   FROM_DIR=$2
-  COPYFILE_DISABLE=true
+  export COPY_EXTENDED_ATTRIBUTES_DISABLE=true
+  export COPYFILE_DISABLE=true
+  #COPYFILE_DISABLE=true
   mkdir -p "$DIST_DIR"
   tar -c --exclude-from=$SETUP_ROOT_PATH/.tarignore -vzf "$DIST_DIR"/$ARCHIVE_NAME.tar.gz -C $FROM_DIR .
   scp $DIST_DIR/$ARCHIVE_NAME.tar.gz $DIST_SRV.mapa.io:/mnt/ebs/data/upload/

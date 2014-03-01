@@ -1,5 +1,5 @@
 
-function populate.db {
+function populate.db.x {
   createdb -p 5433 -U postgres -E UTF8 -l pt_BR.UTF-8 -T template0 -e gis
   CREATE DATABASE gis ENCODING 'UTF8' TEMPLATE template0 LC_COLLATE 'pt_BR.UTF-8' LC_CTYPE 'pt_BR.UTF-8';
 

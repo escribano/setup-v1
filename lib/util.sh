@@ -31,3 +31,10 @@ function add.me.to.bashrc () {
   echo "source $SETUP_ROOT_PATH/install" >> ~/.bashrc
   echo "" >> .bashrc
 }
+
+function clone.db () {
+  mkdir -p ~/code
+  cd ~/code
+  git clone https://github.com/escribano/db.git
+  cd db
+}
