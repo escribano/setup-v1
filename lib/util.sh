@@ -16,3 +16,12 @@ function source.me {
   #git pull origin master
   cd $SAVED_PWD
 }
+
+function up.me {
+  SAVED_PWD=`pwd`
+  cd $SETUP_ROOT_PATH
+  git add -A
+  git commit -am 'fix'
+  git push origin master
+  cd $SAVED_PWD
+}

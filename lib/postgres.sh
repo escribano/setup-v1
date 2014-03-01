@@ -25,16 +25,16 @@ function move.cluster {
 function config.cluster {
   cp /etc/postgresql/9.3/main/pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf.backup
   echo "
-# TYPE  DATABASE        USER            ADDRESS                 METHOD
-local   all             all                                     trust
-local   all             all                                     ident map=admin
-local   all             all                                     ident
-local   all             all                                     peer
-local   all             all                                     md5
+  # TYPE  DATABASE        USER            ADDRESS                 METHOD
+  local   all             all                                     trust
+  local   all             all                                     ident map=admin
+  local   all             all                                     ident
+  local   all             all                                     peer
+  local   all             all                                     md5
   " > /etc/postgresql/9.3/main/include_auth_hba.conf
   
-  sed -n 'H;${x;s/# DO NOT DISABLE!.*\n/include "include_auth_hba.conf"\n\n\n&/;p;}' /etc/postgresql/9.3/main/pg_hba.conf > /etc/postgresql/9.3/main/pg_hba.conf
-  
+  sed -n 'H;${x;s/# DO NOT DISABLE!.*\n/include "include_auth_hba.conf"\n\n\n&/;p;}' < /etc/postgresql/9.3/main/pg_hba.conf > /etc/postgresql/9.3/main/new_pg_hba.conf
+  cp /etc/postgresql/9.3/main/new_pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf
   #include 'filename'
   #include_dir 'directory'
   #nano /etc/postgresql/9.3/main/pg_hba.conf
@@ -51,12 +51,15 @@ local   all             all                                     md5
   #sed -n 'H;${x;s/DISABLE .*\n/include thefile\n&/;p;}' /etc/postgresql/9.3/main/pg_hba.conf
   #sed -n 'H;${x;s/^\n//;s/DISABLE .*$/include thefile\n&/;p;}' /etc/postgresql/9.3/main/pg_hba.conf
   #nano /etc/postgresql/9.3/main/pg_ident.conf
-  # MAPNAME       SYSTEM-USERNAME         PG-USERNAME
-  #echo "
-  #admin           root                    postgres
-  #admin           ademir                  postgres
+  cp /etc/postgresql/9.3/main/pg_ident.conf /etc/postgresql/9.3/main/pg_ident.conf.backup
+  echo "
+  admin           root                    postgres
+  admin           ademir                  postgres
   #admin           www-data                postgres
-  #" > include
+  " > /etc/postgresql/9.3/main/include_map_ident.conf
+  
+  echo "\n" >> /etc/postgresql/9.3/main/pg_ident.conf
+  echo 'include "include_map_ident.conf"' >> /etc/postgresql/9.3/main/pg_ident.conf
 }
 
 function start.postgres {
