@@ -114,20 +114,20 @@ function tag.basic.ami () {
 }
 
 function create.mapa.ami () {
-  # create.mapa.ami i-0cf2f919
+  # create.mapa.ami i-79151f6c
   if [ -z "$1" ]
     then
       echo "No argument supplied"
       return 1
   fi
   INSTANCE_ID=$1
-  AMI_NAME="mapa-v1-debian-jessie-testing-x86_64-ebs-$(date '+%Y-%m-%d')"
+  AMI_NAME="mapa-v2-debian-jessie-testing-x86_64-ebs-$(date '+%Y-%m-%d')"
   #AMI_DESCRIPTION=$3
   #ec2-create-image $INSTANCE_ID --name $AMI_NAME --description $AMI_DESCRIPTION
   #ec2-create-image i-0cf2f919 --name basic-debian-jessie-testing-x86_64-ebs-2014-02-28
   ec2-create-image --region sa-east-1 $INSTANCE_ID --name $AMI_NAME > $SETUP_ROOT_PATH/var/mapa.ami.txt
   MAPA_AMI=`cat $SETUP_ROOT_PATH/var/mapa.ami.txt | awk '$1 == "IMAGE" {print $2}'`
-  ec2-create-tags --region sa-east-1 $MAPA_AMI --tag "Name=mapa.ami.v1"
+  ec2-create-tags --region sa-east-1 $MAPA_AMI --tag "Name=mapa.ami.v2"
   ec2-describe-images --region sa-east-1 $MAPA_AMI
 }
 
@@ -251,29 +251,31 @@ function show.install.mapa.server () {
   printf "or \n"
   printf "new.mapa.server.block ip public \n"
   printf "and \n"
-  printf "describe.instance INSTANCE_ID \n"
-  printf "tag.instance INSTANCE_ID INSTANCE_NAME \n"
+  #printf "describe.instance INSTANCE_ID \n"
+  #printf "tag.instance INSTANCE_ID INSTANCE_NAME \n"
   printf "create ip \n"
   printf "config dns SERVER_NAME \n"
   
-  printf "create.ebs.data INSTANCE_ID \n"
-  printf "create.ebs.db INSTANCE_ID \n"
-  printf "create.ebs.mapa INSTANCE_ID \n"
-  printf "copy.key SERVER_NAME \n"
-  printf "ssh.admin SERVER_NAME \n"
+  printf "transfer.ebs.data <servername> \n"
+  #printf "create.ebs.data INSTANCE_ID \n"
+  printf "create.ebs.db <servername> \n"
+  #printf "create.ebs.mapa INSTANCE_ID \n"
+  printf "copy.key <servername> \n"
+  printf "ssh.admin <servername> \n"
 
   printf "$txtgrn"
-  printf "git pull origin master \n"
+  printf "update.setup \n"
+  printf "source.setup \n"
+  printf "update.jessie \n"
+  #printf "config.locale \n"
   printf "create.me \n"
   printf "install.key \n"
   printf "install.node.25 \n"
   printf "mount.ebs.data \n"
   printf "mount.ebs.db \n"
-  printf "mount.ebs.mapa \n"
-  printf "install.postgres \n"
-  printf "stop.postgres \n"
-  printf "move.cluster \n"
-  printf "start.postgres \n"
+  #printf "mount.ebs.mapa \n"
+  #printf "setup.postgres \n"
+  printf "install.db \n"
   
   printf "$txtrst"
 }

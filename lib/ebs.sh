@@ -26,6 +26,23 @@ function create.ebs.data {
   ec2-describe-volumes --region sa-east-1 $VOLUME_ID
 }
 
+function transfer.ebs.data {
+  SERVER_NAME=$1
+  INSTANCE_ID=`ec2-describe-instances --region sa-east-1 --filter tag:Name=$SERVER_NAME | awk '$1 == "INSTANCE" {print $2}'`
+  VOLUME_ID=`ec2-describe-volumes --region sa-east-1 --filter tag:Name=mapa.data | awk '$1 == "VOLUME" {print $2}'`
+  #echo $INSTANCE_ID
+  #ec2-create-volume --region sa-east-1 -z sa-east-1a -s 20 > $SETUP_ROOT_PATH/var/create.ebs.data.txt
+  #VOLUME_ID=`cat $SETUP_ROOT_PATH/var/create.ebs.data.txt | awk '$1 == "VOLUME" {print $2}'`
+  #sleep 15
+  _attach.volume f $INSTANCE_ID $VOLUME_ID
+  #echo $INSTANCE_ID
+  #echo $VOLUME_ID
+  sleep 5
+  #ec2-create-tags --region sa-east-1 $VOLUME_ID --tag "Name=mapa.data"
+  ec2-describe-volumes --region sa-east-1 $VOLUME_ID
+}
+
+
 function create.ebs.db {
   SERVER_NAME=$1
   INSTANCE_ID=`ec2-describe-instances --region sa-east-1 --filter tag:Name=$SERVER_NAME | awk '$1 == "INSTANCE" {print $2}'`

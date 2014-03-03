@@ -56,19 +56,11 @@ function show.create.ready.ami () {
   
   printf "$txtgrn"
   printf "install.basic.libs \n"
-
-  printf "$txtcyn"
-  printf "create ready ami \n"
-  
-  printf "config.locale \n"
-
-  printf "$txtgrn"
-  printf "git clone https://github.com/escribano/setup.git \n"
-  printf "install.more.libs \n"
+  printf "install.setup \n"
   printf "history -c \n"
 
   printf "$txtcyn"
-  printf "create.mapa.ami i-0cf2f919 \n"
+  printf "create ready ami \n"
   
   printf "$txtrst"
 }
@@ -94,11 +86,10 @@ function show.create.new.mapa.ami () {
   printf "history -c \n"
 
   printf "$txtcyn"
-  printf "create.mapa.ami i-0cf2f919 \n"
+  printf "create.mapa.ami i-79151f6c \n"
   
   printf "$txtrst"
 }
-
 
 function create.ready.ami () {
   # create.mapa.ami i-79151f6c

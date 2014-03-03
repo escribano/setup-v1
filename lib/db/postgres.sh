@@ -3,6 +3,16 @@ function install.postgres {
   apt-get install postgresql-9.1-postgis libpq-dev -y
 }
 
+function setup.postgres {
+  stop.postgres
+  sleep 5
+  move.cluster
+  sleep 2
+  config.cluster
+  sleep 2
+  start.postgres
+}
+
 function stop.postgres {
   /etc/init.d/postgresql   stop
 }
