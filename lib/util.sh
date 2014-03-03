@@ -2,14 +2,14 @@ function show.function {
    declare -f "$1"
 }
 
-function update.me {
+function update.setup {
   SAVED_PWD=`pwd`
   cd $SETUP_ROOT_PATH
   git pull origin master
   cd $SAVED_PWD
 }
 
-function source.me {
+function source.setup {
   SAVED_PWD=`pwd`
   cd $SETUP_ROOT_PATH
   source ./install
@@ -17,7 +17,7 @@ function source.me {
   cd $SAVED_PWD
 }
 
-function up.me {
+function up.setup {
   SAVED_PWD=`pwd`
   cd $SETUP_ROOT_PATH
   git add -A
@@ -26,15 +26,12 @@ function up.me {
   cd $SAVED_PWD
 }
 
-function add.me.to.bashrc () {
+function add.setup.to.bashrc () {
   echo "" >> .bashrc
   echo "source $SETUP_ROOT_PATH/install" >> ~/.bashrc
   echo "" >> .bashrc
 }
 
-function clone.db () {
-  mkdir -p ~/code
-  cd ~/code
-  git clone https://github.com/escribano/db.git
-  cd db
+function goto.setup () {
+  cd ~/code/setup
 }
