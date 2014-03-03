@@ -8,7 +8,7 @@ function _send.this () {
   #COPYFILE_DISABLE=true
   mkdir -p "$DIST_DIR"
   tar -c --exclude-from=$SETUP_ROOT_PATH/.tarignore -vzf "$DIST_DIR"/$ARCHIVE_NAME.tar.gz -C $FROM_DIR .
-  scp $DIST_DIR/$ARCHIVE_NAME.tar.gz $DIST_SRV.mapa.io:/mnt/ebs/data/upload/
+  scp $DIST_DIR/$ARCHIVE_NAME.tar.gz $DIST_SRV.mapa.io:/mnt/ebs/data/gis/upload/
 }
 
 function data.upload () {
@@ -28,19 +28,21 @@ function data.upload () {
 }
 
 function config.data.dir () {
-  mkdir -p /mnt/ebs/data/upload
-  chown ademir.ademir /mnt/ebs/data/upload
+  mkdir -p /mnt/ebs/data/gis/upload
+  chown ademir.ademir /mnt/ebs/data/gis/upload
 }
 
 function explode.upload () {
   DELAY_INSTALL=true
   # tar -xf archive.tar -C /target/directory
-  rm -rf /mnt/ebs/data/mapa/import/sql
-  mkdir -p /mnt/ebs/data/mapa/import/sql
-  tar xzvf /mnt/ebs/data/upload/sql.import.tar.gz -C /mnt/ebs/data/mapa/import/sql
+  rm -rf /mnt/ebs/data/gis/import/sql
+  mkdir -p /mnt/ebs/data/gis/import/sql
+  tar xzvf /mnt/ebs/data/gis/upload/sql.import.tar.gz -C /mnt/ebs/data/gis/import/sql
   if [ $DELAY_INSTALL != true ]; then
-    tar xzvf /mnt/ebs/data/upload/raster.data.tar.gz  -C /mnt/ebs/data/mapa/raster
-    tar xzvf /mnt/ebs/data/upload/fonts.tar.gz -C /mnt/ebs/data/mapa/fonts
+    rm -rf /mnt/ebs/data/gis/mapserver
+    mkdir -p /mnt/ebs/data/gis/mapserver/{raster, fonts}
+    tar xzvf /mnt/ebs/data/gis/upload/raster.data.tar.gz  -C /mnt/ebs/data/gis/mapserver/raster
+    tar xzvf /mnt/ebs/data/gis/upload/fonts.tar.gz -C /mnt/ebs/data/gis/mapserver/fonts
     #tar xzvf /mnt/ebs/data/upload/shapefiles.tar.gz -C /mnt/ebs/data/mapa/shp
   fi
 }

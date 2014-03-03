@@ -1,7 +1,7 @@
 function install.setup () {
   SAVED_PWD=`pwd`
   if [ "$UNAME" == "Linux" ]; then
-    mkdir -p opt/gis ; cd opt/gis
+    mkdir -p /opt/gis ; cd /opt/gis
     git clone https://github.com/escribano/setup.git
   elif [ "$UNAME"  == "Darwin" ]; then
     mkdir -p ~/code/gis ; cd ~/code/gis
@@ -16,7 +16,7 @@ function install.setup () {
 function install.db () {
   SAVED_PWD=`pwd`
   if [ "$UNAME" == "Linux" ]; then
-    mkdir -p opt/gis ; cd opt/gis
+    mkdir -p /opt/gis ; cd /opt/gis
     git clone https://github.com/escribano/db.git
   elif [ "$UNAME"  == "Darwin" ]; then
     mkdir -p ~/code/gis ; cd ~/code/gis
@@ -48,8 +48,30 @@ function end.setup.server () {
   create.me
   install.key
   install.node.25
-  mount.ebs.data
+  remount.ebs.data
   mount.ebs.db
   install.db
 }
 
+
+function show.install.mapa.server () {
+  _show.header
+  
+  printf "$txtcyn"
+  
+  printf "new.mapa.server ip public \n"
+  printf "or \n"
+  printf "new.mapa.server.block ip public \n"
+  printf "and \n"
+  #printf "describe.instance INSTANCE_ID \n"
+  #printf "tag.instance INSTANCE_ID INSTANCE_NAME \n"
+  printf "associate.mapa.ip \n"
+  printf "config dns mapa \n"
+  
+  printf "begin.setup.server mapa \n"
+
+  printf "$txtgrn"
+  printf "end.setup.server \n"
+  
+  printf "$txtrst"
+}

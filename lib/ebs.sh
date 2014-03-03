@@ -89,7 +89,20 @@ function _mount.ebs () {
   mount /mnt/ebs/$MOUNT_NAME
 }
 
+function _remount.ebs () {
+  DEVICE_LETTER=$1
+  MOUNT_NAME=$2
+  #mkfs.xfs /dev/xvd$DEVICE_LETTER
+  mkdir -p /mnt/ebs/$MOUNT_NAME
+  echo "/dev/xvd$DEVICE_LETTER /mnt/ebs/$MOUNT_NAME xfs noatime 0 0" | sudo tee -a /etc/fstab
+  mount /mnt/ebs/$MOUNT_NAME
+}
+
 function mount.ebs.data {
+  _remount.ebs f data
+}
+
+function remount.ebs.data {
   _mount.ebs f data
 }
 
