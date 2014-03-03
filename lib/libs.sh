@@ -1,3 +1,7 @@
+function update.jessie {
+  apt-get update && apt-get upgrade -y
+}
+
 
 function install.basic.libs {
   apt-get update && apt-get upgrade -y

@@ -59,6 +59,8 @@ function show.create.ready.ami () {
 
   printf "$txtcyn"
   printf "create ready ami \n"
+  
+  printf "config.locale \n"
 
   printf "$txtgrn"
   printf "git clone https://github.com/escribano/setup.git \n"
@@ -69,4 +71,49 @@ function show.create.ready.ami () {
   printf "create.mapa.ami i-0cf2f919 \n"
   
   printf "$txtrst"
+}
+
+function show.create.new.mapa.ami () {
+  _show.header
+  
+  printf "$txtcyn"
+  printf "new.ready.server ip public \n"
+  printf "or \n"
+  printf "new.ready.server.block ip public \n"
+  printf "and \n"
+  printf "config dns mapa \n"
+  printf "ssh.admin mapa \n"
+  
+  printf "$txtgrn"
+  printf "update.setup \n"
+  printf "source.setup \n"
+  printf "update.jessie \n"
+  printf "config.locale \n"
+
+  printf "install.more.libs \n"
+  printf "history -c \n"
+
+  printf "$txtcyn"
+  printf "create.mapa.ami i-0cf2f919 \n"
+  
+  printf "$txtrst"
+}
+
+
+function create.ready.ami () {
+  # create.mapa.ami i-79151f6c
+  if [ -z "$1" ]; then
+    echo "No argument supplied"
+    return 1
+  fi
+  INSTANCE_ID=$1
+  AMI_NAME="ready-debian-jessie-testing-x86_64-ebs-$(date '+%Y-%m-%d')"
+  #AMI_DESCRIPTION=$3
+  #ec2-create-image $INSTANCE_ID --name $AMI_NAME --description $AMI_DESCRIPTION
+  #ec2-create-image i-0cf2f919 --name basic-debian-jessie-testing-x86_64-ebs-2014-02-28
+  ec2-create-image --region sa-east-1 $INSTANCE_ID --name $AMI_NAME > $SETUP_ROOT_PATH/var/new.ready.ami.txt
+  READY_AMI=`cat $SETUP_ROOT_PATH/var/new.ready.ami.txt | awk '$1 == "IMAGE" {print $2}'`
+  ec2-create-tags --region sa-east-1 $READY_AMI --tag "Name=ready.ami"
+  sleep 5
+  ec2-describe-images --region sa-east-1 $READY_AMI
 }
