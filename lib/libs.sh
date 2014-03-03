@@ -1,9 +1,11 @@
 
 function install.basic.libs {
+  apt-get update && apt-get upgrade -y
   apt-get install build-essential curl git -y
 }
 
 function install.more.libs {
+  apt-get update && apt-get upgrade -y
   apt-get install autoconf automake cmake nmap xfsprogs unzip  -y
   apt-get install subversion gettext checkinstall chkconfig openssl libssl-dev  -y
   apt-get install python python-pip python-virtualenv -y

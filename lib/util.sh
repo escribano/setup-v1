@@ -29,7 +29,7 @@ function up.setup {
 function add.setup.to.bashrc () {
   echo "" >> .bashrc
   echo "source $SETUP_ROOT_PATH/install" >> ~/.bashrc
-  echo "" >> .bashrc
+  #echo "" >> .bashrc
 }
 
 function goto.setup () {
