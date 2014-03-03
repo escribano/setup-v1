@@ -35,3 +35,7 @@ function add.setup.to.bashrc () {
 function goto.setup () {
   cd ~/code/setup
 }
+
+function reset.known.hosts () {
+  cat /dev/null > /Users/ademir/.ssh/known_hosts
+}

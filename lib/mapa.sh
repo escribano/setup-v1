@@ -77,7 +77,7 @@ function create.mapa.ami () {
   #ec2-create-image $INSTANCE_ID --name $AMI_NAME --description $AMI_DESCRIPTION
   #ec2-create-image i-0cf2f919 --name basic-debian-jessie-testing-x86_64-ebs-2014-02-28
   ec2-create-image --region sa-east-1 $INSTANCE_ID --name $MAPA_AMI_NAME > $SETUP_ROOT_PATH/var/new.mapa.ami.txt
-  MAPA_AMI=`cat $SETUP_ROOT_PATH/var/new.ready.ami.txt | awk '$1 == "IMAGE" {print $2}'`
+  MAPA_AMI=`cat $SETUP_ROOT_PATH/var/new.mapa.ami.txt | awk '$1 == "IMAGE" {print $2}'`
   ec2-create-tags --region sa-east-1 $MAPA_AMI --tag "Name=mapa.ami"
   sleep 5
   ec2-describe-images --region sa-east-1 $MAPA_AMI
