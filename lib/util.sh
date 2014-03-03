@@ -2,7 +2,7 @@ function show.function {
    declare -f "$1"
 }
 
-function update.setup {
+function pull.setup {
   SAVED_PWD=`pwd`
   cd $SETUP_ROOT_PATH
   git pull origin master
@@ -17,7 +17,7 @@ function source.setup {
   cd $SAVED_PWD
 }
 
-function up.setup {
+function push.setup {
   SAVED_PWD=`pwd`
   cd $SETUP_ROOT_PATH
   git add -A

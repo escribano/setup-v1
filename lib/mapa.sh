@@ -1,4 +1,4 @@
-function _config.args.new.mapa.server () {
+function _config.args.new.ready.server () {
   #if [ $# -eq 0 ]
   #  then
   #    echo "No arguments supplied"
@@ -25,7 +25,7 @@ function _config.args.new.mapa.server () {
 
 function new.ready.server () {
   # new.basic.server ip public
-  _config.args.new.mapa.server $@
+  _config.args.new.ready.server $@
   echo "ip: 10.0.0.$IP"
   echo "public ip: $PUBLICIP"
   if [ $ERROR == true ]; then
