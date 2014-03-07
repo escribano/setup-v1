@@ -19,9 +19,10 @@ function associate.address () {
    ec2-associate-address -a eipalloc-5723d13e -i i-4fd2431a 
 }
 function describe.address () {
-  ec2-describe-addresses --region sa-east-1 54.207.8.226
-  ec2-describe-addresses --region sa-east-1 eipalloc-70151f12
-  ec2-describe-addresses --region sa-east-1 54.207.66.208
+  ec2-describe-addresses --region sa-east-1 
+  #ec2-describe-addresses --region sa-east-1 54.207.8.226
+  #ec2-describe-addresses --region sa-east-1 eipalloc-70151f12
+  #ec2-describe-addresses --region sa-east-1 54.207.66.208
 }
 
 function show.adresses () {
@@ -34,6 +35,22 @@ function show.adresses () {
   "
 }
 
+function pipi () {
+  while read data
+  do
+    echo "[$(date +"%D %T")] $data" # >> $logfile
+  done
+}
+
+function concat () {
+  cat
+  echo Orbix
+}
+
+function concat2 () {
+ read N
+ echo "$N" Orbix
+}
 
 
 

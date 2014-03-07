@@ -1,29 +1,41 @@
+# Basic Settings
+#
+
 #fontName = "Menlo"
-#fontSize         = 13
-
+#fontName       = "Monaco" 
 #fontName = "DejaVu Sans Mono"
-#fontSize = 14
+fontName         = "Source Code Pro"
+fontSize         = 13
 
-#fontName         = "Source Code Pro"
-#fontSize         = 13
+# Configure git and hg
+#
+# TM_HG  = "/opt/local/bin/hg"
+# TM_GIT = "/opt/local/bin/git"
+# TM_GIT = "/usr/bin/git"
+# PATH   = "$PATH:$HOME/Scripts"
 
-exclude = "{$exclude,.DS_Store}"
+# Default editing configuration
+#
+softWrap         = false
+softTabs         = true
+tabSize          = 2
+#wrapColumn     = 80 | "Use Window Frame" # choose one
+# wrapColumn       = "Use Window Frame"
+#sofWrap        = false
+showInvisibles = true
 
-[ attr.untitled ]
-fileType         = 'source.md'
+#encoding         = UTF-8
+#lineEndings      = '\n'
 
-[ "*.{html,htm}" ]
-softWrap   = false
-softTabs   = true
-tabSize    = 4
-
-[ "*.{txt,md,mdown,markdown}" ]
-softWrap   = true
-softTabs   = false
-tabSize    = 2
-
-excludeFiles   = "*.{so,pyc,o,scssc}"
-excludeDirectories = "build,dist,tmp,log"
+# show the path to the current tab's file in the window title 
+# (replace the 2 instances of 'username' in the string below 
+# with your mac username).
+windowTitle    = "$TM_DISPLAYNAME${TM_DIRECTORY/\A(?:\/Users\/ademir\w+\/?(.*)|(.+))\z/${2:? – ${2/\A\/Users\/ademir/~/}:${1/\A(?=.)/ – /}}/}"
+# windowTitle      = "$TM_DISPLAYNAME - Zanshin"
+# ---------------------------------------------------------
+# Display the name of the home directory
+# ---------------------------------------------------------
+# windowTitle    = "$TM_DISPLAYNAME - ${CWD/^.*\///}"
 
 #You have to create a .tm_properties file in your project root and add this line:
 
@@ -33,24 +45,85 @@ projectDirectory = "$CWD"
 
 #If you want to navigate the project using the finder/project drawer use the same keys as in Finder.
 
-# show the path to the current tab's file in the window title 
-# (replace the 2 instances of 'username' in the string below 
-# with your mac username).
-windowTitle    = "$TM_DISPLAYNAME${TM_DIRECTORY/\A(?:\/Users\/username\w+\/?(.*)|(.+))\z/${2:? – ${2/\A\/Users\/username/~/}:${1/\A(?=.)/ – /}}/}"
+TM_FULLNAME   = "Ademir Escribano"
+TM_ORGANIZATION = "mapa.io"
 
 
-#fontName       = "Monaco" 
-#fontSize       = 13
-#tabSize        = 2
-#softTabs       = true
-#wrapColumn     = 80 | "Use Window Frame" # choose one
-#sofWrap        = false
-showInvisibles = true
+include = "{$include,.*}"
+exclude = "{$exclude,.git}"
+exclude = "{$exclude,.DS_Store}"
+
+excludeFiles   = "*.{so,pyc,o,scssc}"
+excludeDirectories = "build,dist,tmp,log"
+
+# Extra files to include
+#
+myExtraIncludes = ".tm_properties,.htaccess,.gitignore"
+fileBrowserGlob  = "{*,$myExtraIncludes}"
+#fileBrowserGlob  = "{*,.tm_properties,.htaccess}"
+include = "{$include,$myExtraIncludes}"
+
+# Hide log, vendor and tmp directories from search popups.
+#
+myExtraExcludes = "log,vendor,tmp"
+excludeInFileChooser  = "{$excludeInFileChooser,$myExtraExcludes}"
+excludeInFolderSearch = "{$excludeInFolderSearch,$myExtraExcludes}"
+
+# Hide log, vendor and tmp directories from search popups.
+#
+moreExtraExcludes = "dist,docs,node_modules,prd,test"
+excludeInFileChooser  = "{$excludeInFileChooser,$moreExtraExcludes}"
+excludeInFolderSearch = "{$excludeInFolderSearch,$moreExtraExcludes}"
+
+# If you also want to hide them from your project manager pane, add
+# the following line to your project's local .tm_properties.
+#
+# excludeInBrowser      = "{$excludeInBrowser,log,vendor,tmp}"
+
+
+
+# File type specific configuration
+#
+
+[ attr.untitled ]
+#fileType         = 'source.txt'
+fileType         = source.txt
+wrapColumn       = "Use Window Frame"
+
+[ text ]
+showInvisibles   = true
+wrapColumn       = "Use Window Frame"
+
+[ .git/COMMIT_EDITMSG ]
+spellChecking    = true
+spellingLanguage = 'en'
+
+[ *.{icns,ico,jpg,jpeg,m4v,nib,pdf,png,psd,pyc,rtf,tif,tiff,xib} ]
+binary           = true
+
+[ source ]
+softTabs         = true
+tabSize          = 2
+
+[ source.python ]
+softTabs         = true
+tabSize          = 4
+
+[ "{README,INSTALL,LICENSE,TODO}" ]
+fileType         = "text.plain"
+
+[ "*.{html,htm}" ]
+softWrap   = false
+softTabs   = true
+tabSize    = 4
 
 # special per-filetype rules can be specified like so:
-#[ *.{txt,md,mdown,markdown} ]
+[ "*.{txt,md,mdown,markdown}" ]
+softWrap   = true
+softTabs   = true
+tabSize    = 2
+wrapColumn     = 80
 #spellChecking  = true
-#tabSize        = 4
 #spellingLanguage = 'en'
 
 [ "{.npmignore,*.log,app.mako-dot-conf,00-branch.mako-dot-conf,ga-ol3.exports}" ]
@@ -59,9 +132,5 @@ fileType         = "text.plain"
 [ "{bin/*}" ]
 fileType         = "shell.script"
 
-# Hide log, vendor and tmp directories from search popups.
-#
-moreExtraExcludes = "dist,docs,node_modules,prd,test"
-excludeInFileChooser  = "{$excludeInFileChooser,$moreExtraExcludes}"
-excludeInFolderSearch = "{$excludeInFolderSearch,$moreExtraExcludes}"
+
 

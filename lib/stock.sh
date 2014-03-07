@@ -61,4 +61,10 @@ function more.functions () {
   ec2-unassign-private-ip-addresses --region sa-east-1
   ec2-terminate-instances --region sa-east-1
   ec2-describe-tags --region sa-east-1
+  
+  
+  
+  describe.address | awk '$1 == "ADDRESS" {print $3}' | ec2-describe-instances --region sa-east-1  | awk '$1 == "TAG" {print $3 , $5}'
+  
+  
 }

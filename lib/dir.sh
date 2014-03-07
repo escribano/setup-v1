@@ -1,0 +1,7 @@
+dir="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+pidfile="$dir/var/spcallingd.pid"
+exec="/usr/local/bin/node"
+prog="spcallingd"
+args="$dir/node_modules/coffee-script/bin/coffee app.coffee"
+#args="$dir/node_modules/coffee-script/bin/coffee server.coffee"
+#export NODE_ENV="production"
