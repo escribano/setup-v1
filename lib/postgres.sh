@@ -4,13 +4,17 @@ function install.postgres {
 }
 
 function setup.postgres {
-  stop.postgres
-  sleep 5
-  move.cluster
-  sleep 2
-  config.cluster
-  sleep 2
-  start.postgres
+  if [ "$UNAME" == "Linux" ]; then
+    stop.postgres
+    sleep 5
+    move.cluster
+    sleep 2
+    config.cluster
+    sleep 2
+    start.postgres
+  elif [ "$UNAME"  == "Darwin" ]; then
+    echo "not supportet"
+  fi
 }
 
 function stop.postgres {
@@ -18,21 +22,26 @@ function stop.postgres {
 }
 
 function move.cluster {
-  # move cluster
-  mkdir -p /mnt/ebs/db/{etc,lib,log}
-  mv /etc/postgresql     /mnt/ebs/db/etc/
-  mv /var/lib/postgresql /mnt/ebs/db/lib/
-  mv /var/log/postgresql /mnt/ebs/db/log/
-  mkdir /etc/postgresql /var/lib/postgresql /var/log/postgresql
-  echo "/mnt/ebs/db/etc/postgresql /etc/postgresql none bind" | sudo tee -a /etc/fstab
-  echo "/mnt/ebs/db/lib/postgresql /var/lib/postgresql none bind" | sudo tee -a /etc/fstab
-  echo "/mnt/ebs/db/log/postgresql /var/log/postgresql none bind" | sudo tee -a /etc/fstab
-  mount /etc/postgresql
-  mount /var/lib/postgresql
-  mount /var/log/postgresql
+  if [ "$UNAME" == "Linux" ]; then
+    # move cluster
+    mkdir -p /mnt/ebs/db/{etc,lib,log}
+    mv /etc/postgresql     /mnt/ebs/db/etc/
+    mv /var/lib/postgresql /mnt/ebs/db/lib/
+    mv /var/log/postgresql /mnt/ebs/db/log/
+    mkdir /etc/postgresql /var/lib/postgresql /var/log/postgresql
+    echo "/mnt/ebs/db/etc/postgresql /etc/postgresql none bind" | sudo tee -a /etc/fstab
+    echo "/mnt/ebs/db/lib/postgresql /var/lib/postgresql none bind" | sudo tee -a /etc/fstab
+    echo "/mnt/ebs/db/log/postgresql /var/log/postgresql none bind" | sudo tee -a /etc/fstab
+    mount /etc/postgresql
+    mount /var/lib/postgresql
+    mount /var/log/postgresql
+  elif [ "$UNAME"  == "Darwin" ]; then
+    echo "not supportet"
+  fi
 }
 
 function config.cluster {
+  if [ "$UNAME" == "Linux" ]; then
   cp /etc/postgresql/9.3/main/pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf.backup
   
   sed -n 'H;${x;s/# DO NOT DISABLE!.*\n/  \
@@ -51,6 +60,9 @@ local   all             all                                     md5 \
   echo "admin           ademir                  postgres" >> /etc/postgresql/9.3/main/pg_ident.conf
   #echo "#admin           www-data                postgres" >> /etc/postgresql/9.3/main/pg_ident.conf
   echo "" >> /etc/postgresql/9.3/main/pg_ident.conf
+  elif [ "$UNAME"  == "Darwin" ]; then
+    echo "not supportet"
+  fi
 }
 
 function start.postgres {
